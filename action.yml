@@ -57,6 +57,7 @@ runs:
         MECHA_MINECRAFT: ${{ inputs.minecraft }}
         MECHA_LOG: ${{ inputs.log }}
       run: |
+        shopt -s extglob
         source ~/.mecha_venv/bin/activate
         mecha $MECHA_SOURCE --minecraft "$MECHA_MINECRAFT" --log "$MECHA_LOG"
       shell: bash
