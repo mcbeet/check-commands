@@ -1,0 +1,62 @@
+name: Check minecraft commands
+author: Valentin Berlier <berlier.v@gmail.com>
+description: Github action to validate minecraft data packs and function files.
+
+branding:
+  icon: check-square
+  color: red
+
+inputs:
+  version:
+    description: The version of mecha to install
+    required: true
+    default: 'latest'
+  source:
+    description: The list of data packs, functions files or folders to validate
+    required: true
+  minecraft:
+    description: The version of minecraft to use for checking commands
+    required: true
+    default: '1.17'
+  log:
+    description: The output log level
+    required: true
+    default: 'WARNING'
+
+runs:
+  using: composite
+  steps:
+    - name: Setup python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.9'
+    - name: Setup cache
+      id: cached-mecha-venv
+      uses: actions/cache@v2
+      with:
+        path: ~/.mecha_venv
+        key: mecha-venv-${{ runner.os }}-${{ inputs.version }}
+    - name: Install mecha
+      if: steps.cached-mecha-venv.outputs.cache-hit != 'true'
+      env:
+        MECHA_VERSION: ${{ inputs.version }}
+      run: |
+        if [ ! -d ~/.mecha_venv ]; then
+          python -m venv ~/.mecha_venv
+        fi
+        source ~/.mecha_venv/bin/activate
+        if [ "$MECHA_VERSION" == "latest" ]; then
+          pip install mecha
+        else
+          pip install "mecha==$MECHA_VERSION"
+        fi
+      shell: bash
+    - name: Run mecha
+      env:
+        MECHA_SOURCE: ${{ inputs.source }}
+        MECHA_MINECRAFT: ${{ inputs.minecraft }}
+        MECHA_LOG: ${{ inputs.log }}
+      run: |
+        source ~/.mecha_venv/bin/activate
+        mecha $MECHA_SOURCE --minecraft "$MECHA_MINECRAFT" --log "$MECHA_LOG"
+      shell: bash
