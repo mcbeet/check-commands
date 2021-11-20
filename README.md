@@ -65,7 +65,7 @@ Check a data pack at the root of the repository with an explicit minecraft versi
 
 ## Contributing
 
-Contributions are welcome. Make sure to first open an issue discussing the problem or the new feature before creating a pull request. If you find a bug please try to share a link the problematic action run.
+Contributions are welcome. Make sure to first open an issue discussing the problem or the new feature before creating a pull request. If you find a bug please try to share a link to the problematic action run.
 
 ---
 
