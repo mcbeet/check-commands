@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: mcbeet/check-commands@v1.1
+      - uses: mcbeet/check-commands@v1
         with:
           source: path/to/my_data_pack
 ```
@@ -33,7 +33,7 @@ This github action installs [`mecha`](https://github.com/mcbeet/mecha) in an iso
 Check a data pack when the `pack.mcmeta` file is at the root of the repository.
 
 ```yml
-- uses: mcbeet/check-commands@v1.1
+- uses: mcbeet/check-commands@v1
   with:
     source: .
 ```
@@ -41,7 +41,7 @@ Check a data pack when the `pack.mcmeta` file is at the root of the repository.
 Check a data pack located in the `src` directory.
 
 ```yml
-- uses: mcbeet/check-commands@v1.1
+- uses: mcbeet/check-commands@v1
   with:
     source: src
 ```
@@ -49,7 +49,7 @@ Check a data pack located in the `src` directory.
 Check individual function files.
 
 ```yml
-- uses: mcbeet/check-commands@v1.1
+- uses: mcbeet/check-commands@v1
   with:
     source: foo.mcfunction bar.mcfunction
 ```
@@ -57,7 +57,7 @@ Check individual function files.
 Check a data pack at the root of the repository with an explicit minecraft version.
 
 ```yml
-- uses: mcbeet/check-commands@v1.1
+- uses: mcbeet/check-commands@v1
   with:
     source: .
     minecraft: "1.18"
