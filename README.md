@@ -1,5 +1,8 @@
 # Check minecraft commands
 
+![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/mcbeet/check-commands)
+[![Discord](https://img.shields.io/discord/900530660677156924?color=7289DA&label=discord&logo=discord&logoColor=fff)](https://discord.gg/98MdSGMm8j)
+
 > Github action to validate minecraft data packs and function files.
 
 ```yml
