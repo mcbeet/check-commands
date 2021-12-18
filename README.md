@@ -73,7 +73,7 @@ Check a data pack at the root of the repository and output statistics.
 - uses: mcbeet/check-commands@v1
   with:
     source: .
-    stats: "true"
+    stats: true
 ```
 
 ## Contributing
