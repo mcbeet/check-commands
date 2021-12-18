@@ -29,6 +29,7 @@ This github action installs [`mecha`](https://github.com/mcbeet/mecha) in an iso
 | `version`   | defaults to `latest`  | The version of mecha to install                                |
 | `source`    | required              | The list of data packs, functions files or folders to validate |
 | `minecraft` | defaults to `1.17`    | The version of minecraft to use for checking commands          |
+| `stats`     | defaults to `false`   | Whether to output statistics                                   |
 | `log`       | defaults to `WARNING` | The output log level                                           |
 
 ## Examples
@@ -64,6 +65,15 @@ Check a data pack at the root of the repository with an explicit minecraft versi
   with:
     source: .
     minecraft: "1.18"
+```
+
+Check a data pack at the root of the repository and output statistics.
+
+```yml
+- uses: mcbeet/check-commands@v1
+  with:
+    source: .
+    stats: "true"
 ```
 
 ## Contributing

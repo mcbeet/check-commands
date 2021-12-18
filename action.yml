@@ -18,6 +18,10 @@ inputs:
     description: The version of minecraft to use for checking commands
     required: true
     default: '1.17'
+  stats:
+    description: Whether to output statistics
+    required: true
+    default: "false"
   log:
     description: The output log level
     required: true
@@ -55,9 +59,10 @@ runs:
       env:
         MECHA_SOURCE: ${{ inputs.source }}
         MECHA_MINECRAFT: ${{ inputs.minecraft }}
+        MECHA_STATS: ${{ inputs.stats == 'true' && '--stats' || '' }}
         MECHA_LOG: ${{ inputs.log }}
       run: |
         shopt -s extglob
         source ~/.mecha_venv/bin/activate
-        mecha $MECHA_SOURCE --minecraft "$MECHA_MINECRAFT" --log "$MECHA_LOG"
+        mecha $MECHA_SOURCE --minecraft "$MECHA_MINECRAFT" --log "$MECHA_LOG" $MECHA_STATS
       shell: bash
