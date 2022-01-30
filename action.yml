@@ -40,29 +40,30 @@ runs:
       with:
         path: ~/.mecha_venv
         key: mecha-venv-${{ runner.os }}-${{ inputs.version }}
-    - name: Install mecha
-      if: steps.cached-mecha-venv.outputs.cache-hit != 'true'
-      env:
-        MECHA_VERSION: ${{ inputs.version }}
-      run: |
-        if [ ! -d ~/.mecha_venv ]; then
-          python -m venv ~/.mecha_venv
-        fi
-        source ~/.mecha_venv/bin/activate
-        if [ "$MECHA_VERSION" == "latest" ]; then
-          pip install mecha
-        else
-          pip install "mecha==$MECHA_VERSION"
-        fi
-      shell: bash
     - name: Run mecha
       env:
+        CACHE_HIT: ${{ steps.cached-mecha-venv.outputs.cache-hit }}
+        MECHA_VERSION: ${{ inputs.version }}
         MECHA_SOURCE: ${{ inputs.source }}
         MECHA_MINECRAFT: ${{ inputs.minecraft }}
         MECHA_STATS: ${{ inputs.stats == 'true' && '--stats' || '' }}
         MECHA_LOG: ${{ inputs.log }}
       run: |
+        if [ "$CACHE_HIT" != "true" ] || [ ! -f ~/.mecha_venv/bin/python ]; then
+          rm -rf ~/.mecha_venv
+          python -m venv ~/.mecha_venv
+
+          source ~/.mecha_venv/bin/activate
+
+          if [ "$MECHA_VERSION" == "latest" ]; then
+            pip install mecha
+          else
+            pip install "mecha==$MECHA_VERSION"
+          fi
+        else
+          source ~/.mecha_venv/bin/activate
+        fi
+
         shopt -s extglob
-        source ~/.mecha_venv/bin/activate
         mecha $MECHA_SOURCE --minecraft "$MECHA_MINECRAFT" --log "$MECHA_LOG" $MECHA_STATS
       shell: bash
