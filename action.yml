@@ -10,14 +10,14 @@ inputs:
   version:
     description: The version of mecha to install
     required: true
-    default: 'latest'
+    default: "latest"
   source:
     description: The list of data packs, functions files or folders to validate
     required: true
   minecraft:
     description: The version of minecraft to use for checking commands
     required: true
-    default: '1.17'
+    default: "1.19"
   stats:
     description: Whether to output statistics
     required: true
@@ -25,24 +25,24 @@ inputs:
   log:
     description: The output log level
     required: true
-    default: 'WARNING'
+    default: "WARNING"
 
 runs:
   using: composite
   steps:
-    - name: Setup python
-      uses: actions/setup-python@v2
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v4
       with:
-        python-version: '3.9'
+        python-version: "3.10"
     - name: Setup cache
-      id: cached-mecha-venv
-      uses: actions/cache@v2
+      id: cache-mecha-venv
+      uses: actions/cache@v3
       with:
         path: ~/.mecha_venv
         key: mecha-venv-${{ runner.os }}-${{ inputs.version }}
     - name: Run mecha
       env:
-        CACHE_HIT: ${{ steps.cached-mecha-venv.outputs.cache-hit }}
+        CACHE_HIT: ${{ steps.cache-mecha-venv.outputs.cache-hit }}
         MECHA_VERSION: ${{ inputs.version }}
         MECHA_SOURCE: ${{ inputs.source }}
         MECHA_MINECRAFT: ${{ inputs.minecraft }}
